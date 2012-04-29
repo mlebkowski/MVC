@@ -19,9 +19,9 @@ class Component {
 			return $this->fc->getParam(substr($key, 0, - strlen('Param')));
 		}
 	}
-	public function __construct(FrontController $fc, Database $db) {
+	public function __construct(FrontController $fc, Database $db = null) {
 		$this->setFrontController($fc);
-		$this->setDatabase($db);
+		if ($db) $this->setDatabase($db);
 	}
 	public function setDatabase(Database $db) {
 		$this->db = $db;
