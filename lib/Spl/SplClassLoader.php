@@ -21,6 +21,7 @@ class SplClassLoader
 {
     private $_fileExtension = '.php';
     private $_namespace;
+    private $_skipNamespace;
     private $_includePath;
     private $_namespaceSeparator = '\\';
 
@@ -30,10 +31,11 @@ class SplClassLoader
      * 
      * @param string $ns The namespace to use.
      */
-    public function __construct($ns = null, $includePath = null)
+    public function __construct($ns = null, $includePath = null, $skipNamespace = false)
     {
         $this->_namespace = $ns;
         $this->_includePath = $includePath;
+        $this->_skipNamespace = $skipNamespace;
     }
 
     /**
@@ -127,6 +129,9 @@ class SplClassLoader
                 $namespace = substr($className, 0, $lastNsPos);
                 $className = substr($className, $lastNsPos + 1);
                 $fileName = str_replace($this->_namespaceSeparator, DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+                if ($this->_skipNamespace) {
+                	$fileName = substr($fileName, strlen($this->_namespace . DIRECTORY_SEPARATOR));
+                }
             }
             $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . $this->_fileExtension;
 

@@ -1,0 +1,5 @@
+Main:
+  route: /
+  action: act?test=1
+  page: main
+#  role: user
