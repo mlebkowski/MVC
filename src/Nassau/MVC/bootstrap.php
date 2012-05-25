@@ -54,7 +54,7 @@
 	
 	try {
 	
-		$fc = new FrontController($config, new Application($env, 'Example'));
+		$fc = new FrontController($config, new Application($env));
 		$fc->init();
 		$fc->run($request);
 		

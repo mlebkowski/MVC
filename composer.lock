@@ -1,0 +1,37 @@
+{
+    "hash": "71d00827d69bd0649d2c89635f8fc245",
+    "packages": [
+        {
+            "package": "mlebkowski/config",
+            "version": "dev-master",
+            "source-reference": "16d0f0bb955b5b5611e60edab46a30723aeed8e9"
+        },
+        {
+            "package": "mlebkowski/routing",
+            "version": "dev-master",
+            "source-reference": "fe17267cd217c718f54769786201c49e4a30bc78"
+        },
+        {
+            "package": "symfony/http-foundation",
+            "version": "dev-master",
+            "source-reference": "5b1581418381f46679604fd19efc8b518f2390ae",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/yaml",
+            "version": "dev-master",
+            "source-reference": "49ad500448c17a4b515c8f567dbb540af3cf41ef",
+            "alias": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "twig/twig",
+            "version": "dev-master",
+            "source-reference": "573a36097146b319e5fb36546a0377c7440bbfe3",
+            "alias": "1.8.9999999.9999999-dev"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ]
+}
