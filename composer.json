@@ -2,8 +2,9 @@
     "name": "mlebkowski/mvc",
     "description": "Model View Controller",
     "require": {
-        "twig/twig": "1.8.x-dev",
-        "symfony/http-foundation": "2.1.x-dev",
+        "twig/twig": "1.8.*",
+        "symfony/http-foundation": "2.1.*",
+        "symfony/event-dispatcher": "2.1.*",
         "mlebkowski/config": "dev-master",
         "mlebkowski/routing": "dev-master"
     },

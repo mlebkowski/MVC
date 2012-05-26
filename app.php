@@ -55,6 +55,26 @@
 	try {
 	
 		$fc = new FrontController($config, new Application($env, 'Example'));
+		
+		$fc->ed->addListener(FrontController::EVENT_INIT_ROUTER, function ($event) {
+			$defaults = array (
+				'layout' => 'index',
+				'controller' => 'Web',
+			);
+			
+			$router = $event->getArgument('fc')->router;
+			$routes = $router->getRoutes();
+			$array = $routes->toArray();
+			foreach ($array as &$route) {
+				foreach ($defaults as $key => $value) {
+					if (false === array_key_exists($key, $route)) {
+						$route[$key] = $routes->read('Default/' . $key, $value);
+					}
+				}
+			}
+			$router->setRoutes(new Config($array));
+		});
+		
 		$fc->init();
 		$fc->run($request);
 		

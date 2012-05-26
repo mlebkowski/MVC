@@ -10,10 +10,11 @@ class FrontController {
 
 	public $params = array ();
 	
+	protected $ed;
 	protected $app;
+	protected $config;	
 	protected $request;
 	protected $controller;
-	protected $config;	
 	protected $database;
 	protected $router;
 	protected $view;
@@ -25,11 +26,17 @@ class FrontController {
 	public $route;
 	
 	public $types = array('service', 'manager', 'block');
+	
+	const EVENT_INIT_ROUTER = 'init-router';
+	const EVENT_ROUTE_MATCH = 'route-match';
 
 	function __construct(Config $config, Application $app) {
 		
 		$this->config = $config;
 		$this->app = $app;
+		
+		$this->ed = new \Symfony\Component\EventDispatcher\EventDispatcher;
+		
 	}
 	/*
 		Dodam event dispatchera (DI), ktory bedzie odpalal eventa
@@ -61,6 +68,11 @@ class FrontController {
 			$this->defaultController = $routes->read('Default/Controller', 'Web');
 		
 		$this->router = new Matcher($routes);
+		$this->event(self::EVENT_INIT_ROUTER);
+	}
+	public function event($name) {
+		$event = new \Symfony\Component\EventDispatcher\GenericEvent($name, array ('fc' => $this));
+		$this->ed->dispatch($name, $event);
 	}
 
 	public function run(Request $request) {
@@ -70,11 +82,12 @@ class FrontController {
 			list ($REQ) = explode("?", $request->getRequestUri());
 			$this->route = $this->router->match($REQ);
 			
-			$this->dispatch();
-			// dispatch!
+			$this->event(self::EVENT_ROUTE_MATCH);
 		} catch (\Exception $e) {
 			throw new NotFound('Requested resoruce could not be found', 404);
 		}
+		
+		$this->dispatch();
 		
 		$action = parse_url($this->route['route']['action']);
 		
@@ -89,17 +102,22 @@ class FrontController {
 			$this->route['params']
 		);
 		
-		$action = $this->buildAction($action['path']);
+		if ($action['path']) {
+			$action = $this->buildAction($action['path']);
+		} else {
+			$action = null;
+		}
 		$this->executeAction($action);
-	}	
+	}
 	
 	public function getAppNamespace()
 	{
 		$ns = func_get_args();
-		$ns = array_map("ucfirst", $ns);
 		
 		array_unshift($ns, $this->app->ns);
 		array_unshift($ns, null);
+		
+		$ns = array_map("ucfirst", $ns);
 		
 		return implode("\\", $ns);
 	}
@@ -138,8 +156,10 @@ class FrontController {
 		$this->controller->processRoute($this->route['route']);
 	}
 
-	public function executeAction(Action $action) {
-		$result = $action -> execute();
+	public function executeAction(Action $action = null) {
+		if (null !== $action) {
+			$result = $action -> execute();
+		}
 		
 		switch ($result):
 		case Action::RESULT_RENDER:

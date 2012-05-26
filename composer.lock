@@ -1,5 +1,5 @@
 {
-    "hash": "71d00827d69bd0649d2c89635f8fc245",
+    "hash": "2b75a31b26a9b049bd640391907c655d",
     "packages": [
         {
             "package": "mlebkowski/config",
@@ -9,7 +9,13 @@
         {
             "package": "mlebkowski/routing",
             "version": "dev-master",
-            "source-reference": "fe17267cd217c718f54769786201c49e4a30bc78"
+            "source-reference": "d4b6935cb6e04bb0811f39ed40a3671bf03e7241"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "source-reference": "eb82542e8ec9506096caf7c528564c740a214f56",
+            "alias": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/http-foundation",
@@ -26,7 +32,7 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "573a36097146b319e5fb36546a0377c7440bbfe3",
+            "source-reference": "45d0f6fe67e2199d1148cf1c7e832674af4e8e93",
             "alias": "1.8.9999999.9999999-dev"
         }
     ],
